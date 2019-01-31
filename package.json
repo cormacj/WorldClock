@@ -1,0 +1,22 @@
+{
+  "fitbit": {
+    "appUUID": "f6d226c9-c460-4084-86b1-f3388a32acdc",
+    "appType": "clockface",
+    "appDisplayName": "World Clock",
+    "iconFile": "resources/icon.png",
+    "wipeColor": "",
+    "requestedPermissions": [],
+    "buildTargets": [
+      "higgs",
+      "meson"
+    ],
+    "i18n": {
+      "en": {
+        "name": "World Clock"
+      }
+    }
+  },
+  "devDependencies": {
+    "@fitbit/sdk": "~3.0.0"
+  }
+}

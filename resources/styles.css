@@ -1,0 +1,22 @@
+.background {
+  viewport-fill: black;
+}
+
+#homeTime {
+  font-size: 80;
+  font-family: Fabrikat-Bold;
+  text-length: 12;
+  text-anchor: start;
+  x: 5%;
+  y: 25%+40;
+  fill: white;
+}
+#worldTime {
+  font-size: 80;
+  font-family: Fabrikat-Bold;
+  text-length: 12;
+  text-anchor: start;
+  x: 5%;
+  y: 75%+40;
+  fill: white;
+}
