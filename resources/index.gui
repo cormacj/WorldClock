@@ -1,4 +1,5 @@
 <svg class="background">
   <text id="homeTime" />
   <text id="worldTime" />
+  <text id="testUtc" />
 </svg>
