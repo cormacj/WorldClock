@@ -3,6 +3,9 @@ import document from "document";
 import { preferences } from "user-settings";
 import * as util from "../common/utils";
 
+//new stuff
+import { Barometer } from "barometer";
+
 // Update the clock every minute
 clock.granularity = "minutes";
 
@@ -13,32 +16,38 @@ const homeTime = document.getElementById("homeTime");
 const worldTime = document.getElementById("worldTime");
 
 const testUtc = document.getElementById("testUtc");
+const worldLT = document.getElementById("worldLabel");
+const homeLT = document.getElementById("homeLabel");
 
 // Update the <text> element every tick with the current time
 clock.ontick = (evt) => {
-  
+
   //console.log(dutc);
   let ampm = 'AM';
   let worldampm = 'AM';
   let today = evt.date;
   let hours = today.getHours();
   let worldhours = (today.getHours()+8) % 24;
-  console.log(`today is ${today}`);
+
+  //console.log(`today is ${today}`);
   //make today a string, so we can parse it
   var transition = today.toString();
   var date = transition.split(" ");
-  var utcOffset = date[5];
-  //by now dutctime is something like "GMT-8:00" so we need to:
-  //strip off the ":00"
-  //strip off the "GMT"
+
+  let mins = util.zeroPad(today.getMinutes());
+
+  
+  //define our UTC variables
+  let utcHourOffset = "";
+  let utcMinOffset = "";
+  let utcOffset = date[5];
   
   //lets reuse transition
   transition = utcOffset.split("");
-  utcOffset = transition[3]+transition[4]+transition[5];
-  //this gives us "-08"
-  //TODO
-  //yes I know there are 30 minute zones too, thats for later. 
-  //right now I want to get this working
+  //console.log(`I started with utcOffset is: ${utcOffset}`);
+  utcHourOffset = transition[3]+transition[4]+transition[5];
+  utcMinOffset = transition[7]+transition[8];
+  //this gives us hours = "-08" and mins="00"
 
   /*
   the today variable is using RFC 2822 format so:
@@ -72,14 +81,17 @@ clock.ontick = (evt) => {
   So we can get away by subtracting this offset from localtime. 
    */
   
+  //Make the UTC variables integers rather than strings
+  //console.log(`Pre reformat utcOffset is: ${utcHourOffset}:${utcMinOffset}`);
+  transition = parseInt(utcHourOffset);
+  utcHourOffset = transition;
+  transition = parseInt(utcMinOffset);
+  utcMinOffset = transition;
+  //console.log(`utcOffset is: ${utcHourOffset}:${utcMinOffset}`);
+  let utchours = (hours - utcHourOffset) % 24;
+  let utcmins = mins - utcMinOffset;
   
-  
-  transition = parseInt(utcOffset);
-  utcOffset = transition;
-  //console.log(`battery level: ${batteryLevel}%`);
-  console.log(`utcOffset is: ${utcOffset}`);
-  let utchours = hours - utcOffset;
-  console.log(`current hour is: ${hours} and utc adjusted hours is: ${utchours}`);
+  //console.log(`current hour is: ${hours} and utc adjusted hours is: ${utchours} and minutes is ${utcmins}`);
   
   //do some modulus math here to allow for localtime being PM, and worldtime being AM
   if (worldhours < 0) {
@@ -98,14 +110,15 @@ clock.ontick = (evt) => {
   if (preferences.clockDisplay === "12h") {
     hours = hours % 12 || 12;
     worldhours = worldhours % 12 || 12;
+    hours = util.spacePad(hours);
+    worldhours = util.spacePad(worldhours);
   } else {
     // 24h format
     hours = util.zeroPad(hours);
     worldhours = util.zeroPad(worldhours);
   }
-  let mins = util.zeroPad(today.getMinutes());
   
-  testUtc.text = `${utchours}:${mins}`;
+  //testUtc.text = `${utchours}:${utcmins}`;
  if (preferences.clockDisplay === "12h") { 
   homeTime.text = `${hours}:${mins} ${ampm}`;
   worldTime.text = `${worldhours}:${mins} ${worldampm}`;
@@ -113,4 +126,7 @@ clock.ontick = (evt) => {
   homeTime.text = `${hours}:${mins}`;
   worldTime.text = `${worldhours}:${mins}`;
  }
+  //homeLT.text = `${hlt}`;
+  homeLT.text = "Home:"; 
+  worldLT.text = "World:";
 }

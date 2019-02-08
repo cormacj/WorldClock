@@ -11,6 +11,7 @@
   y: 25%+40;
   fill: white;
 }
+
 #worldTime {
   font-size: 80;
   font-family: Fabrikat-Bold;
@@ -20,6 +21,7 @@
   y: 75%+40;
   fill: white;
 }
+
 #testUtc {
   font-size: 20;
   font-family: Fabrikat-Bold;
@@ -30,3 +32,22 @@
   fill: white;
 }
 
+#homeLabel {
+  font-size: 20;
+  font-family: Fabrikat-Bold;
+  text-length: 48;
+  text-anchor: start;
+  x: 0%;
+  y: 15%;
+  fill: white;
+}
+
+#worldLabel {
+  font-size: 20;
+  font-family: Fabrikat-Bold;
+  text-length: 48;
+  text-anchor: start;
+  x: 0%;
+  y: 65%;
+  fill: white;
+}

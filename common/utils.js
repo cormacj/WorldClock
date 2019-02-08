@@ -5,3 +5,10 @@ export function zeroPad(i) {
   }
   return i;
 }
+
+export function spacePad(i) {
+  if (i < 10) {
+    i = "  " + i;
+  }
+  return i;
+}

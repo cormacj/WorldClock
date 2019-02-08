@@ -2,4 +2,6 @@
   <text id="homeTime" />
   <text id="worldTime" />
   <text id="testUtc" />
+  <text id="homeLabel" />
+  <text id="worldLabel" />
 </svg>
